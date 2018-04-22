@@ -17,24 +17,7 @@ scanf(" %d",&at[i]);
 
 /*Sorting According to Arrival Time*/
 
-for(i=0;i<n;i++)
-{
-for(j=0;j<n;j++)
-{
-if(at[i]<at[j])
-{
-temp=p[j];
-p[j]=p[i];
-p[i]=temp;
-temp=at[j];
-at[j]=at[i];
-at[i]=temp;
-temp=bt[j];
-bt[j]=bt[i];
-bt[i]=temp;
-}
-}
-}
+
 
 /*Arranging the table according to Burst time,
 Execution time and Arrival Time
