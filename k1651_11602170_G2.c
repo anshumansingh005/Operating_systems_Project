@@ -2,7 +2,7 @@
 int main()
 {
 int i,n,p[10]={1,2,3,4,5,6,7,8,9,10},min,k=1,btime=0;
-int bt[10],temp,j,at[10],wt[10],tt[10],ta=0,sum=0;
+int bt[10],temp,j,at[10],wt[10],tt[10],ta=0,sum=0,pr[10],pos,total;
 float wavg=0,tavg=0,tsum=0,wsum=0;
 printf("\nEnter the No. of processes :");
 scanf("%d",&n);
@@ -84,12 +84,58 @@ tsum=tsum+tt[i];
 
 tavg=(tsum/n);
 
+ for ( i = 0; i < n; ++i)
+ {
+ 	pr[i]=1+(wt[i]/bt[i]);
+  }
+
+  i=0;
+  while(i<n)
+  {
+    pos=i;
+        for(j=i+1;j<n;j++)
+        {
+            if(pr[j]<pr[pos])
+                pos=j;
+        }
+
+        temp=pr[i];
+        pr[i]=pr[pos];
+        pr[pos]=temp;
+
+        temp=bt[i];
+        bt[i]=bt[pos];
+        bt[pos]=temp;
+
+        temp=p[i];
+        p[i]=p[pos];
+        p[pos]=temp;
+        ++i;
+  }
+
+   wt[0]=0;    //waiting time for first process is zero
+
+    //calculate waiting time
+    for(i=1;i<n;i++)
+    {
+        for(j=0;j<i;j++)
+            wt[i]+=bt[j];
+
+        total+=wt[i];
+    }
+
+    wavg=total/n;      //average waiting time
+
 printf("************************");
 printf("\nProcess\t Burst\t Arrival\t Waiting\t Turn-around" );
+    total=0;
+
 for(i=0;i<n;i++)
-{
+{ tt[i]=bt[i]+wt[i];     //calculate turnaround time
+        total+=tt[i];
 printf("\n p%d\t %d\t %d\t\t %d\t\t\t%d",p[i],bt[i],at[i],wt[i],tt[i]);
 }
+tavg= total/n;
 
 printf("\n\nAVERAGE WAITING TIME : %f",wavg);
 printf("\nAVERAGE TURN AROUND TIME : %f",tavg);
